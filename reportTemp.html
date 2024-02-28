@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Report Template</title>
+    <link rel="stylesheet" href="reportStyle.css">
+</head>
+<body class="reportPage">
+    <div class="person1">
+        <div class="header">
+            <img src="logoProgie.jpg" class="schLogo">
+            <div class="holdTitl">
+                <div class="firstLine">
+                    PROGRESSIVE SECONDARY SCHOOL KASANA-LUWEERO
+                </div>
+                <div class="secLine">
+                    progsskl@gmail.com</br>TEL: 0774205590, 0701433027, 0776455080, 0778236023
+                </div>
+            </div>
+            <div class="clearFloat"></div>
+            <div class="blackLine"></div>
+            <div class="blackLine"></div>
+        </div>
+        <div class="reportIntros">
+            <div class="reportWord">
+                END OF TERM THREE 2023 REPORT CARD
+            </div>
+            <div class="theirName inlineB">
+                NAME:
+            </div><div class="addName inlineB"></div>
+            <div class="theirClass inlineB">
+                CLASS:
+            </div><div class="addClass inlineB"></div>
+            <div class="gender inlineB">
+                GENDER:
+            </div><div class="addGender inlineB"></div>
+        </div>
+        <div class="realReport inlineB" style="display: none;">
+            <div class="forHeading">
+                <div class="leftmost">SUBJECT</div>
+                <div class="leftmid">TOPIC</div>
+                <div class="rightmid">SCORE</div>
+                <div class="rightmost">TEACHER'S REMARKS</div>
+                <div class="clearFloat"></div>
+            </div>
+            <div class="forSubj" id="origRow">
+                <div class="subjName leftmost"></div>
+                <div class="subjTopics leftmid">
+                    
+                </div>
+                <div class="scoresNow rightmid">
+                    
+                </div>
+                <div class="trsRmrks rightmost"></div>
+                <div class="clearFloat"></div>
+            </div>
+        </div>
+        <div class="scoreKey"  style="display: none;">
+            <div class="keyHeadings">
+                <div class="leftKey"><b>Identifier</b></div>
+                <div class="midKey"><b>Score range</b></div>
+                <div class="rightKey"><b>Descriptor</b></div>
+            </div>
+            <div class="keyBody">
+                <div class="leftKey">3</div>
+                <div class="midKey">2.5 - 3.0</div>
+                <div class="rightKey"><b>Outstanding:</b> Most or all of Learning Outcomes achieved.</div>
+                <div class="leftKey">2</div>
+                <div class="midKey">1.5 - 2.4</div>
+                <div class="rightKey"><b>Moderate:</b> Many of the Learning Outcomes achieved.</div>
+                <div class="leftKey">1</div>
+                <div class="midKey">0.9 - 1.4</div>
+                <div class="rightKey"><b>Basic:</b> Few Learning Outcomes achieved, generally insufficient.</div>
+            </div>
+        </div>
+        <div class="sva">
+            <div class="svaHeading"><b>Observed Traits, Skills, Values and Attitudes</b></div>
+            <div class="svas"><ul></ul></div>
+        </div>
+        <div class="reportOutros">
+            <div class="nxtTerm">
+                Next term begins on: 29th January, 2024
+            </div>
+            <div class="signOut">
+                <div class="theSign">Signed:</div>
+                <div><img src="nikSig.png" class="signHm"></div>
+                <div class="clearFloat"></div>
+                <div class="freeSpace"><br></div>
+                <div class="hdtrWord">HEADTEACHER</div>
+            </div>            
+            <div class="teller"></div>
+            <button class="populator">Populator</button>
+        </div>
+    </div>
+    <script type="module" src="reportRender.js"></script>
+</html>
