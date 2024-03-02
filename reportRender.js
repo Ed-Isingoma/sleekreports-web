@@ -8,7 +8,7 @@ const topicsArrs = topicsArrs1
 const svaArr = ['Mathematical Computation', 'Communication', 'Creativity', 'Commitment', 'Critical Thinking', 'Cooperation', 'Self-directed learning', 'Problem solving', 'ICT proficiency', 'Logical thinking', 'Leadership', 'Empathy', 'Kindness', 'Sharing', 'Unnecessarily talkative', 'Generally stubborn', 'Often sleepy during class', 'Helpful', 'Disrupts normal order during class', 'Tends to be inactive']
 
 let bodyWrdsData;//new: after adding data to this, dispatch event on populator
-fetch('https://sleekreports-server-cis9l9krl-edgars-projects-2eb72262.vercel.app/schdata', {
+fetch('https://sleekreports-server-gxivxypso-edgars-projects-2eb72262.vercel.app/schdata', {
     method: "POST",
     headers: {
         'Content-Type': 'application/json'
