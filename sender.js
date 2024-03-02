@@ -32,7 +32,7 @@ function showToast(message) {
 }
 
 function fetchAway(basedData) {
-    fetch('http://127.0.0.1:3000/upload', {
+    fetch('http://https://sleekreports-server-cis9l9krl-edgars-projects-2eb72262.vercel.app/upload', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
