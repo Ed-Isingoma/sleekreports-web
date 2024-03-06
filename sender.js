@@ -32,7 +32,7 @@ function showToast(message) {
 }
 
 function fetchAway(basedData) {
-    fetch('//https://sleekreports-server-cujy77omb-edgars-projects-2eb72262.vercel.app/upload', {
+    fetch('https://sleekreportsserv-6828t6cnc-edgars-projects-2eb72262.vercel.app/upload', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -41,7 +41,7 @@ function fetchAway(basedData) {
     }).then(response=> response.json())
     .then(resp => {
         showToast('Report is being generated...');
-        console.log(resp)
+        // console.log(resp)
         for (key in resp) {
             localStorage.setItem(key, resp[key])
         }
