@@ -32,7 +32,7 @@ function showToast(message) {
 }
 
 function fetchAway(basedData) {
-    fetch('https://sleekreportsserv-6828t6cnc-edgars-projects-2eb72262.vercel.app/upload', {
+    fetch('https://sleekreportsserver.onrender.com:3000/upload', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
