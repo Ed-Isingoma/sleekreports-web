@@ -32,7 +32,7 @@ function showToast(message) {
 }
 
 function fetchAway(basedData) {
-    fetch('https://sleekreportsserver.onrender.com:3000/upload', {
+    fetch('https://www.sleekreportsserver.onrender.com/upload', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
