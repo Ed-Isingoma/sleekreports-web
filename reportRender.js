@@ -166,7 +166,6 @@ function populate() {
             document.querySelector(`body>div:nth-of-type(${r})`).querySelector(`.sva`).style.display = 'none'
         }
     }
-    nwReallyPrint() //Uncomment this function to really print
 }
 function calcGrade(mark) {
     const rangeMin = [0, 30, 40, 50, 60, 70, 80, 90]
