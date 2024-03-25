@@ -77,7 +77,7 @@ function populate() {
             const theTarget = document.querySelector(`body>div:nth-of-type(${i})`).querySelector(`.${reportIntros[r]}`)
             theTarget.innerHTML = scoop
             if (r == 1) {
-                childsClassTopics = +scoop.substring(1)-1
+                childsClassTopics = +scoop.substring(2)-1
             }
         }
     }
