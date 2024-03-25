@@ -30,7 +30,7 @@ fetch('https://sleekreportsserver.onrender.com/schdata', {
 
 function populate() {
     //future: declare current class variable here sothat you use it for bringComms and for which topicsArrrs to use
-    let itsThirdTerm = False
+    let itsThirdTerm = false
     //setting up divs for eoy assessment results
     //these are declared in wider scope because someone else needs them
     const eoycover = document.createElement('div')
