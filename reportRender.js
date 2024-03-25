@@ -214,3 +214,16 @@ document.querySelector('.teller').addEventListener('printed', () => {
 //     ipcRenderer.send('resetStoredArr')
 //     theA.dispatchEvent(new MouseEvent('click'))
 // }
+
+function convertHTMLToPDF() {
+    const element = document.body;
+    const options = {
+        margin: 0.5,
+        filename: 'generated_pdf.pdf',
+        image: { type: 'jpeg', quality: 1.0 },
+        html2canvas: { scale: 2 },
+        jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+    };
+    html2pdf().from(element).set(options).save();
+}
+convertHTMLToPDF()
