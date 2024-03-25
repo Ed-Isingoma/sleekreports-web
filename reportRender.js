@@ -1,13 +1,13 @@
-import { bringComms, topicsArrs1 } from './commsGenerate.js'
+import bringComms from './commsGenerate.js'
 document.querySelector('.populator').addEventListener('click', () => { populate() })
 
 const subjsList = ['ENGLISH', 'PHYSICS', 'HISTORY', 'GEOGRAPHY', 'BIOLOGY', 'MATHEMATICS', 'CHEMISTRY', 'PHYSICAL EDUCATION', 'AGRICULTURE', 'ENTREPRENEURSHIP', 'ART', 'ICT', 'CRE', 'IRE', 'LUGANDA', 'LITERATURE', 'KISWAHILI']
 const shortSubjsList = ['eng', "phy", 'hist', 'geog', 'biol', 'math', 'chem', "ped", "agr", "ent", "art", "ict", "cre", "ire", "lug", "lit", "kis"]
 const eoysubjsList = ['ENGLISH', 'PHYSICS', 'ENTREPRENEURSHIP', 'LITERATURE', 'GEOGRAPHY', 'CHEMISTRY', 'MATHEMATICS', 'BIOLOGY', 'HISTORY', 'ICT', 'CRE', 'LUGANDA', 'KISWAHILI', 'IRE', 'PHYSICAL EDUCATION', 'ART', 'AGRICULTURE']
-const topicsArrs = topicsArrs1
-const svaArr = ['Mathematical Computation', 'Communication', 'Creativity', 'Commitment', 'Critical Thinking', 'Cooperation', 'Self-directed learning', 'Problem solving', 'ICT proficiency', 'Logical thinking', 'Leadership', 'Empathy', 'Kindness', 'Sharing', 'Unnecessarily talkative', 'Generally stubborn', 'Often sleepy during class', 'Helpful', 'Disrupts normal order during class', 'Tends to be inactive']
+const svaArr = ['Mathematical Computation', 'Communication', 'Creativity', 'Commitment', 'Critical Thinking', 'Cooperation', 'Self-directed learning', 'Problem solving', 'ICT proficiency', 'Logical thinking', 'Leadership', 'Empathy', 'Kindness', 'Sharing', 'Unnecessarily talkative', 'Generally stubborn', 'Often sleepy during class', 'Helpful', 'Disrupts normal order during class', 'Tends to be inactive'] //this relates to titlesArr in the server upstream
 
 let bodyWrdsData;//new: after adding data to this, dispatch event on populator
+let topicsArrrs;
 fetch('https://sleekreportsserver.onrender.com/schdata', {
     method: "POST",
     headers: {
@@ -20,14 +20,16 @@ fetch('https://sleekreportsserver.onrender.com/schdata', {
 }).then(response=> response.json())
 .then(resp => {
     bodyWrdsData = resp.theData
+    topicsArrrs = resp.theTopics
     console.log('bodyWrdsData', bodyWrdsData)
-    // localStorage.removeItem('schoolKey')
-    // localStorage.removeItem('clearerId')
+    console.log('topicsArrrs', topicsArrrs)
+    localStorage.removeItem('schoolKey')
+    localStorage.removeItem('clearerId')
     document.querySelector('.populator').dispatchEvent(new MouseEvent("click"))
 })
 
 function populate() {
-    //future: declare current class variable here sothat you use it for bringComms and for which topicsArrs to use
+    //future: declare current class variable here sothat you use it for bringComms and for which topicsArrrs to use
     let itsThirdTerm = true
     //setting up divs for eoy assessment results
     //these are declared in wider scope because someone else needs them
@@ -68,11 +70,15 @@ function populate() {
     }
     //this code gives names, classes n genders (and shifts them from the array). will also work for old curriculum
     const reportIntros = ['addName', 'addClass', 'addGender']
+    let childsClassTopics;
     for (let r = 0; r < reportIntros.length; r++) {
         for (let i = 1; i <= bodyWrdsData.length; i++) {
             const scoop = bodyWrdsData[i - 1].shift()
             const theTarget = document.querySelector(`body>div:nth-of-type(${i})`).querySelector(`.${reportIntros[r]}`)
             theTarget.innerHTML = scoop
+            if (r == 1) {
+                childsClassTopics = +scoop.substring(1)-1
+            }
         }
     }
     //now the real populating. The loop below selects a particular learner
@@ -84,16 +90,16 @@ function populate() {
         newTabl.appendChild(document.querySelector(`body>div:nth-of-type(${r}) .forHeading`).cloneNode(true))
         //working on a single subject
         let pageToll = 0
-        for (let b = 0; b < topicsArrs.length; b++) {
+        for (let b = 0; b < topicsArrrs[childsClassTopics].length; b++) {
             const rowClone = voidSubjRow.cloneNode(true)
             rowClone.querySelector('.subjName').innerHTML = subjsList[b]
             let whetherWeAppend = false
             let rowToll = 0
-            for (let dee = 0; dee < topicsArrs[b].length; dee++) {
-                if (topicsArrs[b][dee] && bodyWrdsData[r - 1][4 * b + dee]) {
+            for (let dee = 0; dee < topicsArrrs[childsClassTopics][b].length; dee++) {
+                if (topicsArrrs[childsClassTopics][b][dee] && bodyWrdsData[r - 1][4 * b + dee]) {
                     const topicDiv = document.createElement('div')
                     topicDiv.classList.add('addTopic')
-                    topicDiv.innerHTML = topicsArrs[b][dee]
+                    topicDiv.innerHTML = topicsArrrs[childsClassTopics][b][dee]
                     rowClone.querySelector('.leftmid').appendChild(topicDiv)
                     const scoreDiv = document.createElement('div')
                     scoreDiv.classList.add('addScore')
@@ -193,15 +199,7 @@ function calcRmrks(nodelis, subj) {
     return trsComm
 }
 //later, you can import the currbod from oldcurrtemp
-function nwReallyPrint() {
-    const dateArr = Date().toString().split(' ')
-    dateArr.splice(-4, 4)
-    let filename = ''
-    for (let i = 0; i < dateArr.length; i++) {
-        filename += dateArr[i]
-    }
-    // ipcRenderer.send('doneLoading', filename)
-}
+
 //the UI teller. And it currently isnt showing output
 document.querySelector('.teller').addEventListener('printed', () => {
     document.querySelector('.teller').innerHTML = 'Printed successfully to ' + document.querySelector('.teller').dataset.message
@@ -215,15 +213,25 @@ document.querySelector('.teller').addEventListener('printed', () => {
 //     theA.dispatchEvent(new MouseEvent('click'))
 // }
 
-function convertHTMLToPDF() {
-    const element = document.body;
-    const options = {
-        margin: 0.5,
-        filename: 'generated_pdf.pdf',
-        image: { type: 'jpeg', quality: 1.0 },
-        html2canvas: { scale: 2 },
-        jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
-    };
-    html2pdf().from(element).set(options).save();
-}
-convertHTMLToPDF()
+// function convertHTMLToPDF() {
+//     const element = document.body;
+//     const options = {
+//         margin: 0.5,
+//         filename: 'generated_pdf.pdf',
+//         image: { type: 'jpeg', quality: 1.0 },
+//         html2canvas: { scale: 2 },
+//         jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+//     };
+//     html2pdf().from(element).set(options).save();
+// }
+// convertHTMLToPDF()
+
+// function simulateCtrlP() {
+//     const event = new KeyboardEvent('keydown', {
+//         key: 'p',
+//         ctrlKey: true,
+//         metaKey: true, // For macOS support
+//     });
+//     document.dispatchEvent(event);
+// }
+// simulateCtrlP()

@@ -1,4 +1,4 @@
-const injectAreas = {
+const injectableAreas = {
     1: {
         'eng': ["communicating information about family life", 'expressing likes and dislikes', "identifying different sources of information", "summarising printed information", "using adjectives and verbs properly"],
         'phy': ['one', 'two', 'three', 'four', 'five'],
@@ -55,16 +55,17 @@ const injectAreas = {
         'lug': [],
         'lit': [],
         'kis': []
-    }
+    },
+    4: {}
 }
-function bringComms(subj, theClass, level) {
+export default function bringComms(subj, theClass, level) {
     let numtoggle = Math.floor(Math.random() * 5)
     const numtoggle2 = Math.floor(Math.random() * 5)
     while (numtoggle == numtoggle2) {
         numtoggle = Math.floor(Math.random() * 5)
     }
-    const cwdAreas = injectAreas[theClass][subj][numtoggle]
-    const cwdAreas2 = injectAreas[theClass][subj][numtoggle2]
+    const cwdAreas = injectableAreas[theClass][subj][numtoggle]
+    const cwdAreas2 = injectableAreas[theClass][subj][numtoggle2]
     const rawComms = [
         `Learner finds it considerably difficult in concepts like ${cwdAreas} and is encouraged to personally revisit them from the basics`,
         `Learner has grasped little concerning ${cwdAreas} and cannot easily recount their experiences with ${cwdAreas2}.`,
@@ -73,55 +74,4 @@ function bringComms(subj, theClass, level) {
         `Learner's competence in ${cwdAreas} is exceptional and commendable. They showed impressive performance when it comes to ${cwdAreas2}.`
     ]
     return rawComms[level]
-}
-const topicsArrs2 = [
-    ['engtop1', 'engtop2', 'engtop3', 'engtop4'],
-    ['phytopp1', 'phytopp2', 'phytopp3', 'phytopp4'],
-    ['histtop1', 'histopp2', 'hoisnn'],
-    ['geogtoppp3', 'geogtop4', 'ihogdnn'],
-    ['bioltoppp5', 'bioltope6'],
-    ['mtctoppppp6', 'jsdfkjbd', 'lokmolkm'],
-    ['Carbon in the Environment', 'The Reactivity Series'],
-    ['pedtopp8', 'sdgsd'],
-    ['agrninth', 'agrtenth'],
-    ['ent11', 'entcomm'],
-    ['snfkjvr', 'sdvvsgdg', 'yntrbrb'],
-    ['dhybybf', 'untrvesv', 'wettbs'],
-    ['hbytdsew'],
-    [' hbtrer', 'ybtdsctv', 'brthgvve', 'btfourth comm']
-]
-const topicsArrs1 = [
-    ['engtop1', 'engtop2', 'engtop3', 'engtop4'],
-    ['phytopp1', 'phytopp2', 'phytopp3', 'phytopp4'],
-    ['histtop1', 'histopp2', 'hoisnn'],
-    ['geogtoppp3', 'geogtop4', 'ihogdnn'],
-    ['bioltoppp5', 'bioltope6'],
-    ['mtctoppppp6', 'jsdfkjbd', 'lokmolkm'],
-    ['Mixtures, Elements and Compounds'],
-    ['pedtopp8', 'sdgsd'],
-    ['agrninth', 'agrtenth'],
-    ['ent11', 'entcomm'],
-    ['snfkjvr', 'sdvvsgdg', 'yntrbrb'],
-    ['dhybybf', 'untrvesv', 'wettbs'],
-    ['hbytdsew'],
-    [' hbtrer', 'ybtdsctv', 'brthgvve', 'btfourth comm']
-]
-const topicsArrs3 = [
-    ['engtop1', 'engtop2', 'engtop3', 'engtop4'],
-    ['phytopp1', 'phytopp2', 'phytopp3', 'phytopp4'],
-    ['histtop1', 'histopp2', 'hoisnn'],
-    ['geogtoppp3', 'geogtop4', 'ihogdnn'],
-    ['bioltoppp5', 'bioltope6'],
-    ['mtctoppppp6', 'jsdfkjbd', 'lokmolkm'],
-    ['Carbon in the Environment'],
-    ['pedtopp8', 'sdgsd'],
-    ['agrninth', 'agrtenth'],
-    ['ent11', 'entcomm'],
-    ['snfkjvr', 'sdvvsgdg', 'yntrbrb'],
-    ['dhybybf', 'untrvesv', 'wettbs'],
-    ['hbytdsew'],
-    [' hbtrer', 'ybtdsctv', 'brthgvve', 'btfourth comm']
-]
-export {
-    bringComms, topicsArrs1
 }
