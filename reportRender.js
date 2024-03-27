@@ -1,8 +1,6 @@
-import bringComms from './commsGenerate.js'
 document.querySelector('.populator').addEventListener('click', () => { populate() })
 
 const subjsList = ['ENGLISH', 'PHYSICS', 'HISTORY', 'GEOGRAPHY', 'BIOLOGY', 'MATHEMATICS', 'CHEMISTRY', 'PHYSICAL EDUCATION', 'AGRICULTURE', 'ENTREPRENEURSHIP', 'ART', 'ICT', 'CRE', 'IRE', 'LUGANDA', 'LITERATURE', 'KISWAHILI']
-const shortSubjsList = ['eng', "phy", 'hist', 'geog', 'biol', 'math', 'chem', "ped", "agr", "ent", "art", "ict", "cre", "ire", "lug", "lit", "kis"]
 const eoysubjsList = ['ENGLISH', 'PHYSICS', 'ENTREPRENEURSHIP', 'LITERATURE', 'GEOGRAPHY', 'CHEMISTRY', 'MATHEMATICS', 'BIOLOGY', 'HISTORY', 'ICT', 'CRE', 'LUGANDA', 'KISWAHILI', 'IRE', 'PHYSICAL EDUCATION', 'ART', 'AGRICULTURE']
 const svaArr = ['Mathematical Computation', 'Communication', 'Creativity', 'Commitment', 'Critical Thinking', 'Cooperation', 'Self-directed learning', 'Problem solving', 'ICT proficiency', 'Logical thinking', 'Leadership', 'Empathy', 'Kindness', 'Sharing', 'Unnecessarily talkative', 'Generally stubborn', 'Often sleepy during class', 'Helpful', 'Disrupts normal order during class', 'Tends to be inactive'] //this relates to titlesArr in the server upstream
 
@@ -29,7 +27,6 @@ fetch('https://sleekreportsserver.onrender.com/schdata', {
 })
 
 function populate() {
-    //future: declare current class variable here sothat you use it for bringComms and for which topicsArrrs to use
     let itsThirdTerm = false
     //setting up divs for eoy assessment results
     //these are declared in wider scope because someone else needs them
@@ -70,19 +67,18 @@ function populate() {
     }
     //this code gives names, classes n genders (and shifts them from the array). will also work for old curriculum
     const reportIntros = ['addName', 'addClass', 'addGender']
-    let childsClassTopics;
     for (let r = 0; r < reportIntros.length; r++) {
         for (let i = 1; i <= bodyWrdsData.length; i++) {
             const scoop = bodyWrdsData[i - 1].shift()
             const theTarget = document.querySelector(`body>div:nth-of-type(${i})`).querySelector(`.${reportIntros[r]}`)
             theTarget.innerHTML = scoop
-            if (r == 1) {
-                childsClassTopics = +scoop.substring(2)-1
-            }
         }
     }
     //now the real populating. The loop below selects a particular learner
     for (let r = 1; r <= bodyWrdsData.length; r++) {
+        const childsClassTopics = +document.querySelector(`body>div:nth-of-type(${r}) .addClass`).innerHTML.substring(2) -1
+        const childsFullName = document.querySelector(`body>div:nth-of-type(${r}) .addName`).innerHTML
+        const childs1stName = childsFullName.includes(' ') ? childsFullName.split(' ')[1] : childsFullName.split(' ')[0]
         const voidSubjRow = document.querySelector(`body>div:nth-of-type(${r})`).querySelector('.forSubj')
         //the second realReport table
         const newTabl = document.createElement('div')
@@ -124,7 +120,7 @@ function populate() {
                     rowClone.querySelectorAll('.addScore').forEach(el => el.style.height = '42px')
                     pageToll += rowToll
                 }
-                rowClone.querySelector(`.trsRmrks`).innerHTML = calcRmrks(rowClone.querySelectorAll('.addScore'), shortSubjsList[b])
+                rowClone.querySelector(`.trsRmrks`).innerHTML = calcRmrks(rowClone.querySelectorAll('.addScore'), childs1stName)
                 rowClone.style.display = 'block'
                 let destinatnTab = document.querySelector(`body>div:nth-of-type(${r})`).querySelector('.realReport')
                 if (pageToll >= 24) {
@@ -175,7 +171,61 @@ function calcGrade(mark) {
     }
     return 'G' //just in case, to prevent an error
 }
-function calcRmrks(nodelis, subj) {
+function calcRmrks(nodelis, name) {
+    // const rawComms = {
+    //     0: {
+    //         0: `${name} finds it considerably difficult in foundational learning concepts and is encouraged to personally revisit them from the basics`,
+    //         1: ``,
+    //         2: ``
+    //     },
+    //     1: {
+    //         0: `${name} has grasped little concerning the subject matter and cannot easily recount their experiences with the class activities.`,
+    //         1: ``,
+    //         2: ``
+    //     },
+    //     2: {
+    //         0: `${name} demonstrates evidence of exposure to subject material, although they need more encouragement to perfect their skills and understanding.`,
+    //         1: ``,
+    //         2: ``
+    //     },
+    //     3: {
+    //         0: `${name} exhibits a solid grasp of class concepts and has ability to apply their knowledge and understanding extensively.`,
+    //         1: ``,
+    //         2: ``
+    //     },
+    //     4: {
+    //         0: `${name}'s competence in the subject is exceptional and commendable. The learner showed impressive performance and is also able to influence classmates to do the same.`,
+    //         1: ``,
+    //         2: ``
+    //     }
+    // }
+    const rawComms = {
+        0: {
+            0: '1 Comment 1',
+            1: '1 Comment 2',
+            2: '1 Comment 3'
+        },
+        1: {
+            0: '2 Comment 1',
+            1: '2 Comment 2',
+            2: '2 Comment 3'
+        },
+        2: {
+            0: '3 Comment 1',
+            1: '3 Comment 2',
+            2: '3 Comment 3'
+        },
+        3: {
+            0: '4 Comment 1',
+            1: '4 Comment 2',
+            2: '4 Comment 3'
+        },
+        4: {
+            0: '5 Comment 1',
+            1: '5 Comment 2',
+            2: '5 Comment 3'
+        }
+    }
     let scores = []
     nodelis.forEach(el => {
         if (el.innerHTML) {
@@ -191,7 +241,8 @@ function calcRmrks(nodelis, subj) {
     const avgArray = [1.3, 1.75, 2.2, 2.65, 3.1]
     for (let i = 0; i < avgArray.length; i++) {
         if (avg < avgArray[i]) {
-            trsComm = bringComms(subj, 1, i)
+            const rand = Math.floor(Math.random() * 3)
+            trsComm = rawComms[i][rand]
             break
         }
     }
