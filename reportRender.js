@@ -12,8 +12,7 @@ fetch('https://sleekreportsserver.onrender.com/schdata', {
         'Content-Type': 'application/json'
     },
     body: JSON.stringify({
-        schoolKey: localStorage.getItem("schoolKey"),
-        deleteId: localStorage.getItem("clearerId")
+        schoolKey: localStorage.getItem("schoolKey")
     })
 }).then(response=> response.json())
 .then(resp => {
@@ -22,7 +21,6 @@ fetch('https://sleekreportsserver.onrender.com/schdata', {
     console.log('bodyWrdsData', bodyWrdsData)
     console.log('topicsArrrs', topicsArrrs)
     localStorage.removeItem('schoolKey')
-    localStorage.removeItem('clearerId')
     document.querySelector('.populator').dispatchEvent(new MouseEvent("click"))
 })
 
@@ -169,7 +167,7 @@ function calcGrade(mark) {
     for (let i = rangeMin.length - 1; i >= 0; i--) {
         if (mark >= rangeMin[i]) return theGrades[i]
     }
-    return 'G' //just in case, to prevent an error
+    return 'Error 404' //just in case, to prevent an error
 }
 function calcRmrks(nodelis, name) {
     // const rawComms = {
