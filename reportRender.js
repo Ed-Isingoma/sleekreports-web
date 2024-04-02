@@ -68,26 +68,20 @@ function populate() {
     for (let r = 0; r < reportIntros.length; r++) {
         for (let i = 1; i <= bodyWrdsData.length; i++) {
             const scoop = bodyWrdsData[i - 1].shift()
-            let theTarget = document.querySelector(`body>div:nth-of-type(${i})`).querySelector(`.${reportIntros[r]}`)
-            while (!theTarget) {
-                console.log('setting theTarget...')
-                setTimeout(()=> {
-                    theTarget = document.querySelector(`body>div:nth-of-type(${i})`).querySelector(`.${reportIntros[r]}`)
-                },1000)
-            }
+            const theTarget = document.querySelectorAll('.person1')[i-1].querySelector(`.${reportIntros[r]}`)
             theTarget.innerHTML = scoop
         }
     }
     //now the real populating. The loop below selects a particular learner
     for (let r = 1; r <= bodyWrdsData.length; r++) {
-        const childsClassTopics = +document.querySelector(`body>div:nth-of-type(${r}) .addClass`).innerHTML.substring(2) -1
-        const childsFullName = document.querySelector(`body>div:nth-of-type(${r}) .addName`).innerHTML
+        const childsClassTopics = +document.querySelectorAll('.person1')[r-1].querySelector('.addClass').innerHTML.substring(2) -1
+        const childsFullName = document.querySelectorAll('.person1')[r-1].querySelector('.addName').innerHTML
         const childs1stName = childsFullName.includes(' ') ? childsFullName.split(' ')[1] : childsFullName.split(' ')[0]
-        const voidSubjRow = document.querySelector(`body>div:nth-of-type(${r})`).querySelector('.forSubj')
+        const voidSubjRow = document.querySelectorAll('.person1')[r-1].querySelector('.forSubj')
         //the second realReport table
         const newTabl = document.createElement('div')
         newTabl.className = 'realReport2'
-        newTabl.appendChild(document.querySelector(`body>div:nth-of-type(${r}) .forHeading`).cloneNode(true))
+        newTabl.appendChild(document.querySelectorAll('.person1')[r-1].querySelector('.forHeading').cloneNode(true))
         //working on a single subject
         let pageToll = 0
         for (let b = 0; b < topicsArrrs[childsClassTopics].length; b++) {
@@ -126,9 +120,9 @@ function populate() {
                 }
                 rowClone.querySelector(`.trsRmrks`).innerHTML = calcRmrks(rowClone.querySelectorAll('.addScore'), childs1stName)
                 rowClone.style.display = 'block'
-                let destinatnTab = document.querySelector(`body>div:nth-of-type(${r})`).querySelector('.realReport')
+                let destinatnTab = document.querySelectorAll('.person1')[r-1].querySelector('.realReport')
                 if (pageToll >= 24) {
-                    destinatnTab = document.querySelector(`body>div:nth-of-type(${r}) .realReport`).insertAdjacentElement("afterend", newTabl)
+                    destinatnTab = document.querySelectorAll('.person1')[r-1].querySelector('.realReport').insertAdjacentElement("afterend", newTabl)
                 }
                 destinatnTab.appendChild(rowClone)
             }
@@ -148,7 +142,7 @@ function populate() {
                     studentsEoy.appendChild(studentsEoyrow)
                 }
             }
-            document.querySelector(`body>div:nth-of-type(${r})`).querySelector('.sva').before(studentsEoy)
+            document.querySelectorAll('.person1')[r-1].querySelector('.sva').before(studentsEoy)
         }
         //removing the first forSubj which is empty
         voidSubjRow.remove()
@@ -158,12 +152,12 @@ function populate() {
             if (bodyWrdsData[r - 1][d] == 1) {
                 const newSVA = document.createElement('li')
                 newSVA.innerHTML = svaArr[d - 68]
-                document.querySelector(`body>div:nth-of-type(${r})`).querySelector(`.svas>ul`).appendChild(newSVA)
+                document.querySelectorAll('.person1')[r-1].querySelector('.svas>ul').appendChild(newSVA)
                 weAddedListEl = true
             }
         }
         if (!weAddedListEl) {
-            document.querySelector(`body>div:nth-of-type(${r})`).querySelector(`.sva`).style.display = 'none'
+            document.querySelectorAll('.person1')[r-1].querySelector('.sva').style.display = 'none'
         }
     }
 }
