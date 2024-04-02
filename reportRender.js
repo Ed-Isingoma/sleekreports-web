@@ -63,16 +63,18 @@ function populate() {
         const repClone = document.querySelector('.person1').cloneNode(true)
         document.querySelector('body').appendChild(repClone)
     }
-    //chrome wasnt loading properly, so
-    while (document.querySelectorAll('.person1').length != bodyWrdsData.length){
-        console.log('bomb')
-    }
     //this code gives names, classes n genders (and shifts them from the array). will also work for old curriculum
     const reportIntros = ['addName', 'addClass', 'addGender']
     for (let r = 0; r < reportIntros.length; r++) {
         for (let i = 1; i <= bodyWrdsData.length; i++) {
             const scoop = bodyWrdsData[i - 1].shift()
-            const theTarget = document.querySelector(`body>div:nth-of-type(${i})`).querySelector(`.${reportIntros[r]}`)
+            let theTarget = document.querySelector(`body>div:nth-of-type(${i})`).querySelector(`.${reportIntros[r]}`)
+            while (!theTarget) {
+                console.log('setting theTarget...')
+                setTimeout(()=> {
+                    theTarget = document.querySelector(`body>div:nth-of-type(${i})`).querySelector(`.${reportIntros[r]}`)
+                },1000)
+            }
             theTarget.innerHTML = scoop
         }
     }
