@@ -18,8 +18,8 @@ fetch('https://sleekreportsserver.onrender.com/schdata', {
 .then(resp => {
     bodyWrdsData = resp.theData
     topicsArrrs = resp.theTopics
-    console.log('bodyWrdsData', bodyWrdsData)
-    console.log('topicsArrrs', topicsArrrs)
+    // console.log('bodyWrdsData', bodyWrdsData)
+    // console.log('topicsArrrs', topicsArrrs)
     localStorage.removeItem('schoolKey')
     document.querySelector('.populator').dispatchEvent(new MouseEvent("click"))
 })
@@ -62,6 +62,10 @@ function populate() {
     for (let i = 1; i < bodyWrdsData.length; i++) {
         const repClone = document.querySelector('.person1').cloneNode(true)
         document.querySelector('body').appendChild(repClone)
+    }
+    //chrome wasnt loading properly, so
+    while (document.querySelectorAll('.person1').length != bodyWrdsData.length){
+        console.log('bomb')
     }
     //this code gives names, classes n genders (and shifts them from the array). will also work for old curriculum
     const reportIntros = ['addName', 'addClass', 'addGender']
