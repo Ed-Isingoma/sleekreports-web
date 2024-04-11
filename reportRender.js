@@ -76,7 +76,10 @@ function populate() {
     for (let r = 1; r <= bodyWrdsData.length; r++) {
         const childsClassTopics = +document.querySelectorAll('.person1')[r-1].querySelector('.addClass').innerHTML.substring(2) -1
         const childsFullName = document.querySelectorAll('.person1')[r-1].querySelector('.addName').innerHTML
-        const childs1stName = childsFullName.includes(' ') ? childsFullName.split(' ')[1] : childsFullName.split(' ')[0]
+        const childs1stName = childsFullName.includes(' ') 
+  ? childsFullName.split(' ')[1].charAt(0).toUpperCase() + childsFullName.split(' ')[1].slice(1).toLowerCase() 
+  : childsFullName.charAt(0).toUpperCase() + childsFullName.slice(1).toLowerCase();
+
         const voidSubjRow = document.querySelectorAll('.person1')[r-1].querySelector('.forSubj')
         //the second realReport table
         const newTabl = document.createElement('div')
@@ -170,60 +173,60 @@ function calcGrade(mark) {
     return 'Error 404' //just in case, to prevent an error
 }
 function calcRmrks(nodelis, name) {
-    // const rawComms = {
-    //     0: {
-    //         0: `${name} finds it considerably difficult in foundational learning concepts and is encouraged to personally revisit them from the basics`,
-    //         1: ``,
-    //         2: ``
-    //     },
-    //     1: {
-    //         0: `${name} has grasped little concerning the subject matter and cannot easily recount their experiences with the class activities.`,
-    //         1: ``,
-    //         2: ``
-    //     },
-    //     2: {
-    //         0: `${name} demonstrates evidence of exposure to subject material, although they need more encouragement to perfect their skills and understanding.`,
-    //         1: ``,
-    //         2: ``
-    //     },
-    //     3: {
-    //         0: `${name} exhibits a solid grasp of class concepts and has ability to apply their knowledge and understanding extensively.`,
-    //         1: ``,
-    //         2: ``
-    //     },
-    //     4: {
-    //         0: `${name}'s competence in the subject is exceptional and commendable. The learner showed impressive performance and is also able to influence classmates to do the same.`,
-    //         1: ``,
-    //         2: ``
-    //     }
-    // }
     const rawComms = {
         0: {
-            0: '1 Comment 1',
-            1: '1 Comment 2',
-            2: '1 Comment 3'
+            0: `${name} finds it considerably difficult in foundational learning concepts and is encouraged to personally revisit them from the basics`,
+            1: `${name}'s efforts of coming to class and participating in class activities may not be fruitful yet but there is more chance to try again next term`,
+            2: `${name}'s teacher would like to believe that the outcomes of this term are not a reflection of the learner's inner abilities and love for the subject.`
         },
         1: {
-            0: '2 Comment 1',
-            1: '2 Comment 2',
-            2: '2 Comment 3'
+            0: `${name} has grasped little concerning the subject matter and cannot easily recount their experiences with the class activities.`,
+            1: `The teacher will keep encouraging your efforts and supporting your endeavors to learn subject content, one step at a time`,
+            2: `${name} labours to give attention to the subject with an intention to excel and therefore should not settle for anything mediocre.`
         },
         2: {
-            0: '3 Comment 1',
-            1: '3 Comment 2',
-            2: '3 Comment 3'
+            0: `${name} demonstrates evidence of exposure to subject material, although they need more encouragement to perfect their skills and understanding.`,
+            1: `${name} has shown consistency in grasping the concepts from the learning activities and the teacher knows that even more can be achieved.`,
+            2: `${name} has the ability to consistently show evidence of complete understanding of learning activities but it is not yet being seen clearly.`
         },
         3: {
-            0: '4 Comment 1',
-            1: '4 Comment 2',
-            2: '4 Comment 3'
+            0: `${name} exhibits a solid grasp of class concepts and has ability to apply their knowledge and understanding extensively.`,
+            1: `${name} is already good at the subject but can also become very good at it in a short while.`,
+            2: `The teacher knows that ${name} has put commitment and dedication into their studies and that this is a worthy attribute.`
         },
         4: {
-            0: '5 Comment 1',
-            1: '5 Comment 2',
-            2: '5 Comment 3'
+            0: `${name}'s competence in the subject is exceptional and commendable. The learner showed impressive performance and is also able to influence classmates to do the same.`,
+            1: `The teacher is very impressed with ${name}'s level of comprehension of subject material.`,
+            2: `${name} is a natural talent. Any attempt made to pick the knowledge, skills and values in class yields effortlessly.`
         }
     }
+    // const rawComms = {
+    //     0: {
+    //         0: '1 Comment 1',
+    //         1: '1 Comment 2',
+    //         2: '1 Comment 3'
+    //     },
+    //     1: {
+    //         0: '2 Comment 1',
+    //         1: '2 Comment 2',
+    //         2: '2 Comment 3'
+    //     },
+    //     2: {
+    //         0: '3 Comment 1',
+    //         1: '3 Comment 2',
+    //         2: '3 Comment 3'
+    //     },
+    //     3: {
+    //         0: '4 Comment 1',
+    //         1: '4 Comment 2',
+    //         2: '4 Comment 3'
+    //     },
+    //     4: {
+    //         0: '5 Comment 1',
+    //         1: '5 Comment 2',
+    //         2: '5 Comment 3'
+    //     }
+    // }
     let scores = []
     nodelis.forEach(el => {
         if (el.innerHTML) {
@@ -248,19 +251,6 @@ function calcRmrks(nodelis, name) {
 }
 //later, you can import the currbod from oldcurrtemp
 
-//the UI teller. And it currently isnt showing output
-document.querySelector('.teller').addEventListener('printed', () => {
-    document.querySelector('.teller').innerHTML = 'Printed successfully to ' + document.querySelector('.teller').dataset.message
-    document.querySelector('.teller').style.display = 'flex'
-    setTimeout(() => { document.querySelector('.teller').style.display = 'none' }, 3000)
-})
-// function goBack() {
-//     const theA = document.createElement('a')
-//     theA.href = "get results.html" 
-//     ipcRenderer.send('resetStoredArr')
-//     theA.dispatchEvent(new MouseEvent('click'))
-// }
-
 // function convertHTMLToPDF() {
 //     const element = document.body;
 //     const options = {
@@ -273,13 +263,3 @@ document.querySelector('.teller').addEventListener('printed', () => {
 //     html2pdf().from(element).set(options).save();
 // }
 // convertHTMLToPDF()
-
-// function simulateCtrlP() {
-//     const event = new KeyboardEvent('keydown', {
-//         key: 'p',
-//         ctrlKey: true,
-//         metaKey: true, // For macOS support
-//     });
-//     document.dispatchEvent(event);
-// }
-// simulateCtrlP()
