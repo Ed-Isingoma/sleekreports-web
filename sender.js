@@ -9,14 +9,10 @@ uploadButton.addEventListener('click', (event) => {
         showToast('Please select a file to upload.');
         return;
     }
+    const formData = new FormData();
+    formData.append('file', fileInput.files[0]);
     
-    const reader = new FileReader()
-    reader.readAsDataURL(fileInput.files[0])
-    reader.addEventListener('load', (e) => {
-        const basedData = e.target.result.split(',')[1]
-        // console.log(basedData)
-        fetchAway(basedData)
-    })
+    fetchAway(formData)
     processingSpinner.style.display = 'flex';
 });
 
@@ -31,13 +27,10 @@ function showToast(message) {
     }, 1850);
 }
 
-function fetchAway(basedData) {
-    fetch('https://sleekreportsserver.onrender.com/upload', {
+function fetchAway(formData) {
+    fetch('https://sleekreportsserver.onrender.com', {
         method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ fileData: basedData })
+        body: formData
     }).then(response=> response.json())
     .then(resp => {
         showToast('Report is being generated...');
