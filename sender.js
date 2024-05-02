@@ -28,7 +28,7 @@ function showToast(message) {
 }
 
 function fetchAway(formData) {
-    fetch('https://sleekreportsserver.onrender.com', {
+    fetch('https://sleekreportsserver.onrender.com/upload', {
         method: 'POST',
         body: formData
     }).then(response=> response.json())
