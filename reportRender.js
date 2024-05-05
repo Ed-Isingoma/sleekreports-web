@@ -7,6 +7,7 @@ const svaArr = ['Mathematical Computation', 'Communication', 'Creativity', 'Comm
 let bodyWrdsData;//new: after adding data to this, dispatch event on populator
 let topicsArrrs;
 fetch('https://sleekreportsserver.onrender.com/schdata', {
+    // fetch('http://127.0.0.1:3000/schdata', { //leave for testing purposes
     method: "POST",
     headers: {
         'Content-Type': 'application/json'

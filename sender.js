@@ -29,6 +29,7 @@ function showToast(message) {
 
 function fetchAway(formData) {
     fetch('https://sleekreportsserver.onrender.com/upload', {
+        // fetch('http://127.0.0.1:3000/upload', { //leave for testing purposes
         method: 'POST',
         body: formData
     }).then(response=> response.json())
